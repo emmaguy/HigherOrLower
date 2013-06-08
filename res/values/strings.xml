@@ -2,9 +2,18 @@
 <resources>
 
     <string name="app_name">Higher Or Lower</string>
+
     <string name="button_higher">Higher</string>
     <string name="button_same">Same</string>
     <string name="button_lower">Lower</string>
+    
     <string name="current_card_description">Current card</string>
+    
+    <string name="button_single_player">Single Player</string>
+    <string name="button_multiplayer">Multiplayer</string>
+    
+    <string name="button_highscore_mode">Highscore</string>
+    <string name="button_sudden_death">Sudden death</string>
+    
 
 </resources>
