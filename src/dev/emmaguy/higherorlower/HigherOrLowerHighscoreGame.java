@@ -42,18 +42,6 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	
 	cardChangedListener.onCardChanged(currentCard);
     }
-    
-    public interface OnGameOver {
-	public void onGameOver();
-    }
-    
-    public interface OnCardChanged {
-	public void onCardChanged(Card currentCard);
-    }
-    
-    public interface OnScoreChanged {
-	public void onScoreChanged(int score);
-    }
 
     @Override
     public void higherGuessed() {

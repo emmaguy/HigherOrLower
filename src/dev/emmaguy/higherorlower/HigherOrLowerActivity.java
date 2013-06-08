@@ -1,17 +1,17 @@
 package dev.emmaguy.higherorlower;
 
+import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
+import dev.emmaguy.higherorlower.HigherOrLowerGame.OnGameOver;
+import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
+
 import java.util.Locale;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import dev.emmaguy.higherorlower.HigherOrLowerHighscoreGame.OnCardChanged;
-import dev.emmaguy.higherorlower.HigherOrLowerHighscoreGame.OnGameOver;
-import dev.emmaguy.higherorlower.HigherOrLowerHighscoreGame.OnScoreChanged;
 import dev.emmaguy.higherorlower.cards.Card;
 import dev.emmaguy.higherorlower.cards.Deck;
 import dev.emmaguy.higherorlower.cards.FullDeckBuilder;
