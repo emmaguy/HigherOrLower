@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Higher Or Lower</string>
+    <string name="button_higher">Higher</string>
+    <string name="button_same">Same</string>
+    <string name="button_lower">Lower</string>
+    <string name="current_card_description">Current card</string>
+
+</resources>
