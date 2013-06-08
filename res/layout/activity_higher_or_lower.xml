@@ -2,47 +2,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@color/layout_background"
     tools:context=".HigherOrLowerActivity" >
 
+    <TextView
+        android:id="@+id/textview_score"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:layout_gravity="top|right"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="@color/score_score_colour"
+        android:background="@color/score_background" />
+    
     <ImageView
+        android:id="@+id/imageview_current_card"
         android:layout_width="135dp"
         android:layout_height="195dp"
+        android:layout_gravity="center"
         android:contentDescription="@string/current_card_description" />
 
     <LinearLayout
-        android:id="@+id/fullscreen_content_controls"
-        style="?buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:background="@color/black_overlay"
+        android:background="@color/layout_background"
         android:orientation="horizontal"
         tools:ignore="UselessParent" >
 
         <Button
             android:id="@+id/button_higher"
-            style="?buttonBarButtonStyle"
+            android:layout_margin="2dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@color/button_higher"
             android:text="@string/button_higher" />
 
         <Button
             android:id="@+id/button_same"
-            style="?buttonBarButtonStyle"
+            android:layout_margin="2dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@color/button_same"
             android:text="@string/button_same" />
 
         <Button
             android:id="@+id/button_lower"
-            style="?buttonBarButtonStyle"
+            android:layout_margin="2dp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="@color/button_lower"
             android:text="@string/button_lower" />
