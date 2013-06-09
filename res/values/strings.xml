@@ -15,5 +15,6 @@
     <string name="button_highscore_mode">Highscore</string>
     <string name="button_sudden_death">Sudden death</string>
     
-
+	<string name="sign_out">Sign Out</string>
+	
 </resources>

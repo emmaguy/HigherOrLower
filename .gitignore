@@ -8,6 +8,8 @@
 # Java class files
 *.class
 
+*hidden_strings.xml
+
 # generated files
 bin/
 gen/
