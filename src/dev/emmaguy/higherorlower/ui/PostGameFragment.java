@@ -1,4 +1,4 @@
-package dev.emmaguy.higherorlower.menus;
+package dev.emmaguy.higherorlower.ui;
 
 import android.app.Activity;
 import android.os.Bundle;

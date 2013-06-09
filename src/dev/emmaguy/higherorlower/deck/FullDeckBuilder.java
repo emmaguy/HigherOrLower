@@ -1,7 +1,11 @@
-package dev.emmaguy.higherorlower.cards;
+package dev.emmaguy.higherorlower.deck;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dev.emmaguy.higherorlower.card.Card;
+import dev.emmaguy.higherorlower.card.CardNumber;
+import dev.emmaguy.higherorlower.card.Suit;
 
 public class FullDeckBuilder implements DeckBuilder {
 

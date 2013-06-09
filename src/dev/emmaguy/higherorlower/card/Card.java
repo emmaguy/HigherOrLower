@@ -1,4 +1,4 @@
-package dev.emmaguy.higherorlower.cards;
+package dev.emmaguy.higherorlower.card;
 
 public class Card {
     private final Suit suit;

@@ -1,4 +1,4 @@
-package dev.emmaguy.higherorlower.menus;
+package dev.emmaguy.higherorlower.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,15 +6,14 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.google.example.games.basegameutils.BaseGameActivity;
 
-import dev.emmaguy.higherorlower.HigherOrLowerFragment;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnGameOver;
 import dev.emmaguy.higherorlower.HigherOrLowerHighscoreGame;
 import dev.emmaguy.higherorlower.R;
-import dev.emmaguy.higherorlower.cards.Deck;
-import dev.emmaguy.higherorlower.cards.FullDeckBuilder;
-import dev.emmaguy.higherorlower.menus.PostGameFragment.OnPlayAPIAction;
-import dev.emmaguy.higherorlower.menus.SinglePlayerFragment.OnHighscoreModeButtonClicked;
-import dev.emmaguy.higherorlower.menus.SplashScreenFragment.OnSinglePlayerButtonClicked;
+import dev.emmaguy.higherorlower.deck.Deck;
+import dev.emmaguy.higherorlower.deck.FullDeckBuilder;
+import dev.emmaguy.higherorlower.ui.PostGameFragment.OnPlayAPIAction;
+import dev.emmaguy.higherorlower.ui.SinglePlayerFragment.OnHighscoreModeButtonClicked;
+import dev.emmaguy.higherorlower.ui.SplashScreenFragment.OnSinglePlayerButtonClicked;
 
 public class MainActivity extends BaseGameActivity implements OnGameOver, OnHighscoreModeButtonClicked,
 	OnSinglePlayerButtonClicked, OnPlayAPIAction {

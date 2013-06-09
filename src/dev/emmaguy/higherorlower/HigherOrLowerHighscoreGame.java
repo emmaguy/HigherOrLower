@@ -1,7 +1,7 @@
 package dev.emmaguy.higherorlower;
 
-import dev.emmaguy.higherorlower.cards.Card;
-import dev.emmaguy.higherorlower.cards.Deck;
+import dev.emmaguy.higherorlower.card.Card;
+import dev.emmaguy.higherorlower.deck.Deck;
 
 public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 

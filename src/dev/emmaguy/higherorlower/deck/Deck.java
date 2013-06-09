@@ -1,7 +1,9 @@
-package dev.emmaguy.higherorlower.cards;
+package dev.emmaguy.higherorlower.deck;
 
 import java.util.List;
 import java.util.Random;
+
+import dev.emmaguy.higherorlower.card.Card;
 
 public class Deck {
     private final List<Card> cards;

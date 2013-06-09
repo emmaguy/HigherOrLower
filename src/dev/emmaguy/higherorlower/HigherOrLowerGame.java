@@ -1,6 +1,6 @@
 package dev.emmaguy.higherorlower;
 
-import dev.emmaguy.higherorlower.cards.Card;
+import dev.emmaguy.higherorlower.card.Card;
 
 public interface HigherOrLowerGame {
 
