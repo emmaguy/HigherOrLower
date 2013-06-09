@@ -3,23 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layout_background"
+    android:gravity="center"
     tools:context=".PostGameFragment" >
     
     <Button
         android:id="@+id/button_post_score"
+        style="@style/menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_post_to_leaderboard"
-         />
+        android:text="@string/button_post_to_leaderboard"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_post_score" />
+        android:layout_below="@id/button_post_score"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button_sign_out"
+        style="@style/menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_out"
