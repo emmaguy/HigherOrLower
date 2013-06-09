@@ -9,8 +9,11 @@ public interface HigherOrLowerGame {
     void lowerGuessed();
     void startGame();
     
+    void setOnCardChangedListener(OnCardChanged cardChanged);    
+    void setOnScoreChangedListener(OnScoreChanged scoreChanged);
+    
     public interface OnGameOver {
-	public void onGameOver();
+	public void onGameOver(long score, int leaderboardId);
     }
     
     public interface OnCardChanged {
@@ -18,6 +21,6 @@ public interface HigherOrLowerGame {
     }
     
     public interface OnScoreChanged {
-	public void onScoreChanged(int score);
+	public void onScoreChanged(long score);
     }
 }

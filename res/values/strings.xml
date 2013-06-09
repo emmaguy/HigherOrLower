@@ -16,5 +16,6 @@
     <string name="button_sudden_death">Sudden death</string>
     
 	<string name="sign_out">Sign Out</string>
+	<string name="button_post_to_leaderboard">Post score to leaderboard</string>
 	
 </resources>

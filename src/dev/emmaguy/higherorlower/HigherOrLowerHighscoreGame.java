@@ -9,17 +9,23 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
     private Card currentCard;
     private Card nextCard;
     
-    private int currentScore = 0;
+    private long currentScore = 0;
     
     private OnCardChanged cardChangedListener;
     private OnScoreChanged scoreChangedListener;
     private OnGameOver gameOverListener;
     
-    public HigherOrLowerHighscoreGame(Deck deck, OnCardChanged cardChangedListener, OnScoreChanged scoreChangedListener, OnGameOver gameOverListener) {
+    public HigherOrLowerHighscoreGame(Deck deck, OnGameOver gameOverListener) {
 	this.deck = deck;
-	this.cardChangedListener = cardChangedListener;
-	this.scoreChangedListener = scoreChangedListener;
 	this.gameOverListener = gameOverListener;
+    }
+    
+    public void setOnCardChangedListener(OnCardChanged cardChanged) {
+	this.cardChangedListener = cardChanged;
+    }
+    
+    public void setOnScoreChangedListener(OnScoreChanged scoreChanged) {
+	this.scoreChangedListener = scoreChanged;
     }
     
     public void startGame() {
@@ -34,7 +40,7 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	currentCard = nextCard;
 	
 	if(!deck.hasCardsRemaining()){
-	    gameOverListener.onGameOver();
+	    gameOverListener.onGameOver(currentScore, R.string.leaderboard_id_highscore);
 	    return;
 	}
 	

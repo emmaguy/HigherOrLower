@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layout_background"
-    tools:context=".SplashScreenActivity" >
+    tools:context=".SplashScreenFragment" >
 
     <Button
         android:id="@+id/button_single_player"
@@ -18,19 +18,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/button_single_player"
         android:text="@string/button_multiplayer" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_multiplayer" />
-
-    <Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_out"
-        android:layout_below="@id/button_multiplayer"
-        android:visibility="gone" />
 
 </RelativeLayout>
