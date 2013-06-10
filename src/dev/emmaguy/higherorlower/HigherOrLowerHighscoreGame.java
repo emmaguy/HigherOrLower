@@ -6,14 +6,14 @@ import dev.emmaguy.higherorlower.deck.Deck;
 public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 
     private final Deck deck;
-    private Card currentCard;
-    private Card nextCard;
+    private final OnGameOver gameOverListener;
     
     private long currentScore = 0;
     
+    private Card currentCard;
+    private Card nextCard;
     private OnCardChanged cardChangedListener;
     private OnScoreChanged scoreChangedListener;
-    private OnGameOver gameOverListener;
     
     public HigherOrLowerHighscoreGame(Deck deck, OnGameOver gameOverListener) {
 	this.deck = deck;
