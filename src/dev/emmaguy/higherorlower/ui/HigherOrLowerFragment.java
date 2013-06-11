@@ -61,6 +61,13 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
+    public void onDetach(){
+	super.onDetach();
+	
+	this.currentGame.stopGame();
+    }
+    
+    @Override
     public void onCardChanged(Card currentCard) {
 	ImageView cardView = (ImageView) getView().findViewById(R.id.imageview_current_card);
 
@@ -74,15 +81,24 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     @Override
     public void onScoreChanged(long score) {
 	TextView scoreView = (TextView) getView().findViewById(R.id.textview_score);
-	scoreView.setText(Long.toString(score));
+	
+	if(scoreView != null)
+	    scoreView.setText(Long.toString(score));
     }
 
     @Override
     public void onTimeRemainingChanged(long millisecondsRemaining) {
-	TextView timeView = (TextView) getView().findViewById(R.id.textview_time);
+	View view = getView();
+	if(view == null){
+	    return;
+	}
+	
+	TextView timeView = (TextView) view.findViewById(R.id.textview_time);
 
-	Date timeRemaining = new Date(millisecondsRemaining);
-	DateFormat formatter = new SimpleDateFormat("mm:ss:SSS", Locale.UK);
-	timeView.setText(formatter.format(timeRemaining));
+	if (timeView != null) {
+	    Date timeRemaining = new Date(millisecondsRemaining);
+	    DateFormat formatter = new SimpleDateFormat("mm:ss:SSS", Locale.UK);
+	    timeView.setText(formatter.format(timeRemaining));
+	}
     }
 }

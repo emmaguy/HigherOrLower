@@ -17,8 +17,8 @@ import dev.emmaguy.higherorlower.R;
 public class ResultsFragment extends Fragment implements View.OnClickListener {
 
     private final Handler handler = new Handler();
-    private OnLeaderboardAPIAction leaderboardAPIActionListener;
-    
+    // private OnLeaderboardAPIAction leaderboardAPIActionListener;
+
     private float total = 0;
     private long millisecondsRemaining;
     private int score;
@@ -53,7 +53,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 		return;
 	    }
 	    millisecondsRemaining -= 500;
-	    
+
 	    Date timeRemaining = new Date(millisecondsRemaining);
 	    DateFormat formatter = new SimpleDateFormat("mm:ss:SSS", Locale.UK);
 	    StringBuilder results = new StringBuilder();
@@ -70,6 +70,13 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
     };
 
     @Override
+    public void onDetach(){
+	super.onDetach();
+	
+	handler.removeCallbacks(updateResultTask);	    
+    }
+    
+    @Override
     public void onStart() {
 	super.onStart();
 
@@ -83,7 +90,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 	if (view.getId() == R.id.button_post_score) {
-	    leaderboardAPIActionListener.onPostScore(total, leaderboardId);
+	    // leaderboardAPIActionListener.onPostScore(total, leaderboardId);
 	}
     }
 }

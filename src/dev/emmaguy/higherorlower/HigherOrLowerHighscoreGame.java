@@ -8,7 +8,7 @@ import dev.emmaguy.higherorlower.deck.Deck;
 public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 
     private final Deck deck;
-    private final OnGameOver gameOverListener;
+    private OnGameOver gameOverListener;
     
     private int currentScore = 0;
     private long startTime = 0;
@@ -105,5 +105,14 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	    scoreChangedListener.onScoreChanged(currentScore);
 	}
 	moveToNextCard();
+    }
+
+    @Override
+    public void stopGame() {
+	handler.removeCallbacks(updateTimeRemainingTask);
+	cardChangedListener = null;
+	scoreChangedListener = null;
+	timeRemainingListener = null;
+	gameOverListener = null;
     }
 }

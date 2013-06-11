@@ -3,12 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
-
-    <fragment
-        android:id="@+id/rss_feed_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="dev.emmaguy.higherorlower.ui.SplashScreenFragment">
-    </fragment>
     
 </FrameLayout>

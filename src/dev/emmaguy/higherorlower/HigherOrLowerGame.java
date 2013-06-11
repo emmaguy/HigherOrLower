@@ -8,6 +8,7 @@ public interface HigherOrLowerGame {
     void sameGuessed();
     void lowerGuessed();
     void startGame();
+    void stopGame();
     
     void setOnCardChangedListener(OnCardChanged cardChanged);    
     void setOnScoreChangedListener(OnScoreChanged scoreChanged);

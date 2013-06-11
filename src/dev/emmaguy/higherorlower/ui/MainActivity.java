@@ -19,16 +19,20 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnHigh
 	super.onCreate(savedInstanceState);
 
 	setContentView(R.layout.activity_main);
+	
+	SplashScreenFragment fragment = new SplashScreenFragment();
+	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
+	transaction.replace(R.id.fragment_container, fragment);
+	transaction.commit();
     }
 
     @Override
     public void onGameOver(int score, long millisecondsRemaining, int leaderboardId) {
-	ResultsFragment postGameFragment = new ResultsFragment();
-	postGameFragment.setArguments(score, millisecondsRemaining, leaderboardId);
+	ResultsFragment resultsFragment = new ResultsFragment();
+	resultsFragment.setArguments(score, millisecondsRemaining, leaderboardId);
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, postGameFragment);
-	transaction.addToBackStack(null);
+	transaction.replace(R.id.fragment_container, resultsFragment);
 	transaction.commit();
     }
 
