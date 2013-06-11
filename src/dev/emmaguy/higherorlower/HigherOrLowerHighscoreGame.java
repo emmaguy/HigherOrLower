@@ -10,16 +10,34 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
     private final Deck deck;
     private final OnGameOver gameOverListener;
     
-    private long currentScore = 0;
+    private int currentScore = 0;
     private long startTime = 0;
     private long millisecondsRemaining = 0;
     
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Card currentCard;
     private Card nextCard;
     private OnCardChanged cardChangedListener;
     private OnScoreChanged scoreChangedListener;
     private OnTimeRemainingChanged timeRemainingListener;
+    
+    private final Runnable updateTimeRemainingTask = new Runnable() {
+	   public void run() {
+	       final long start = startTime;
+	       final int maxTime = 2000;//120000;
+	       
+	       millisecondsRemaining = maxTime - (SystemClock.uptimeMillis() - start);
+	       if(millisecondsRemaining <= 0){
+		   timeRemainingListener.onTimeRemainingChanged(0);
+		   gameOverListener.onGameOver(currentScore, 0, R.string.leaderboard_id_highscore);
+		   handler.removeCallbacks(updateTimeRemainingTask);
+		   return;
+	       }
+	       
+	       timeRemainingListener.onTimeRemainingChanged(millisecondsRemaining);
+	       handler.postDelayed(this, 1);
+	   }
+	};
     
     public HigherOrLowerHighscoreGame(Deck deck, OnGameOver gameOverListener) {
 	this.deck = deck;
@@ -61,24 +79,6 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	nextCard = deck.getNextCard();
 	cardChangedListener.onCardChanged(currentCard);
     }
-
-    private Runnable updateTimeRemainingTask = new Runnable() {
-	   public void run() {
-	       final long start = startTime;
-	       final int maxTime = 10000;//120000;
-	       
-	       millisecondsRemaining = maxTime - (SystemClock.uptimeMillis() - start);
-	       if(millisecondsRemaining <= 0){
-		   timeRemainingListener.onTimeRemainingChanged(0);
-		   gameOverListener.onGameOver(currentScore, 0, R.string.leaderboard_id_highscore);
-		   handler.removeCallbacks(updateTimeRemainingTask);
-		   return;
-	       }
-	       
-	       timeRemainingListener.onTimeRemainingChanged(millisecondsRemaining);
-	       handler.postDelayed(this, 1);
-	   }
-	};
     
     @Override
     public void higherGuessed() {

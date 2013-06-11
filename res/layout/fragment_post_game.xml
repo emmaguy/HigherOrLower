@@ -6,27 +6,23 @@
     android:gravity="center"
     tools:context=".PostGameFragment" >
     
+    <TextView
+            android:id="@+id/textview_results"
+            android:layout_width="200dp"
+            android:layout_height="125dp"
+            android:background="@color/score_background"
+            android:gravity="left|center_horizontal"
+            android:textColor="@color/score_score_colour"
+            android:textSize="22sp"
+            android:layout_centerInParent="true" />
+    
     <Button
         android:id="@+id/button_post_score"
         style="@style/menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_post_to_leaderboard"/>
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/button_sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/button_post_score"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/button_sign_out"
-        style="@style/menu_buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_out"
-        android:layout_below="@id/button_post_score"
-        android:visibility="gone" />
+        android:text="@string/button_post_to_leaderboard"
+        android:layout_below="@id/textview_results"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>
