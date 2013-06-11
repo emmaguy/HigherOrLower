@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/layout_background"
     android:gravity="center"
-    tools:context=".PostGameFragment" >
+    tools:context=".ResultsFragment" >
     
     <TextView
             android:id="@+id/textview_results"

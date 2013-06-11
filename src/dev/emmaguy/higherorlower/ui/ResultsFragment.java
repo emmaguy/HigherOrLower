@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,22 +12,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import dev.emmaguy.higherorlower.R;
 
-public class PostGameFragment extends Fragment implements View.OnClickListener {
+public class ResultsFragment extends Fragment implements View.OnClickListener {
 
     private final Handler handler = new Handler();
     private OnLeaderboardAPIAction leaderboardAPIActionListener;
-    private int score;
+    
     private float total = 0;
     private long millisecondsRemaining;
+    private int score;
     private int leaderboardId;
-    private boolean isConnected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	View v = inflater.inflate(R.layout.fragment_post_game, null);
+	View v = inflater.inflate(R.layout.fragment_results, null);
 	v.findViewById(R.id.button_post_score).setOnClickListener(this);
 	return v;
     }
@@ -39,11 +37,10 @@ public class PostGameFragment extends Fragment implements View.OnClickListener {
 	public void onPostScore(float total, int leaderboardId);
     }
 
-    public void setArguments(int score, long millisecondsRemaining, int leaderboardId, boolean isConnected) {
+    public void setArguments(int score, long millisecondsRemaining, int leaderboardId) {
 	this.score = score;
 	this.millisecondsRemaining = millisecondsRemaining;
 	this.leaderboardId = leaderboardId;
-	this.isConnected = isConnected;
     }
 
     private Runnable updateResultTask = new Runnable() {
@@ -84,22 +81,8 @@ public class PostGameFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-	super.onAttach(activity);
-
-	try {
-	    leaderboardAPIActionListener = (OnLeaderboardAPIAction) activity;
-	} catch (ClassCastException e) {
-	    throw new ClassCastException(activity.toString() + " must implement OnLeaderboardAPIAction");
-	}
-    }
-
-    @Override
     public void onClick(View view) {
 	if (view.getId() == R.id.button_post_score) {
-	    if (!isConnected) {
-		// sign in first
-	    }
 	    leaderboardAPIActionListener.onPostScore(total, leaderboardId);
 	}
     }
