@@ -18,7 +18,7 @@
             android:background="@color/score_background"
             android:gravity="center"
             android:textColor="@color/score_score_colour"
-            android:textSize="30sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/textview_score"

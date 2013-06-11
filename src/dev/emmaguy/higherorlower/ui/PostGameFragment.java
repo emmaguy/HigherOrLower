@@ -13,6 +13,7 @@ public class PostGameFragment extends Fragment implements View.OnClickListener {
 
     private OnPlayAPIAction playAPIActionListener;
     private long score;
+    private long millisecondsRemaining;
     private int leaderboardId;
     private boolean isConnected;
 
@@ -31,8 +32,9 @@ public class PostGameFragment extends Fragment implements View.OnClickListener {
 	public void onPostScore(long score, int leaderboardId);
     }
 
-    public void setArguments(long score, int leaderboardId, boolean isConnected) {
+    public void setArguments(long score, long millisecondsRemaining, int leaderboardId, boolean isConnected) {
 	this.score = score;
+	this.millisecondsRemaining = millisecondsRemaining;
 	this.leaderboardId = leaderboardId;
 	this.isConnected = isConnected;
     }

@@ -71,9 +71,9 @@ public class MainActivity extends BaseGameActivity implements OnGameOver, OnHigh
     }
 
     @Override
-    public void onGameOver(long score, int leaderboardId) {
+    public void onGameOver(long score, long millisecondsRemaining, int leaderboardId) {
 	PostGameFragment postGameFragment = new PostGameFragment();
-	postGameFragment.setArguments(score, leaderboardId, mHelper.getGamesClient().isConnected());
+	postGameFragment.setArguments(score, millisecondsRemaining, leaderboardId, mHelper.getGamesClient().isConnected());
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
 	transaction.replace(R.id.fragment_container, postGameFragment);

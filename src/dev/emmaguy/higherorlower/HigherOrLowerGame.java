@@ -11,9 +11,10 @@ public interface HigherOrLowerGame {
     
     void setOnCardChangedListener(OnCardChanged cardChanged);    
     void setOnScoreChangedListener(OnScoreChanged scoreChanged);
+    void setOnTimeRemainingChangedListener(OnTimeRemainingChanged timeRemainingChanged);
     
     public interface OnGameOver {
-	public void onGameOver(long score, int leaderboardId);
+	public void onGameOver(long score, long millisecondsRemaining, int leaderboardId);
     }
     
     public interface OnCardChanged {
@@ -22,5 +23,9 @@ public interface HigherOrLowerGame {
     
     public interface OnScoreChanged {
 	public void onScoreChanged(long score);
+    }
+    
+    public interface OnTimeRemainingChanged {
+	public void onTimeRemainingChanged(long millisecondsRemaining);
     }
 }
