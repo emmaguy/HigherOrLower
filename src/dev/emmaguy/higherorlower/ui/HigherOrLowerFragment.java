@@ -1,8 +1,5 @@
 package dev.emmaguy.higherorlower.ui;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import android.os.Bundle;
@@ -15,12 +12,11 @@ import android.widget.TextView;
 import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
-import dev.emmaguy.higherorlower.HigherOrLowerGame.OnTimeRemainingChanged;
 import dev.emmaguy.higherorlower.R;
+import dev.emmaguy.higherorlower.Score;
 import dev.emmaguy.higherorlower.card.Card;
 
-public class HigherOrLowerFragment extends Fragment implements View.OnClickListener, OnCardChanged, OnScoreChanged,
-	OnTimeRemainingChanged {
+public class HigherOrLowerFragment extends Fragment implements View.OnClickListener, OnCardChanged, OnScoreChanged {
 
     private HigherOrLowerGame currentGame;
     private boolean isGameInitialised = false;
@@ -39,7 +35,6 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
 	this.currentGame.setOnCardChangedListener(this);
 	this.currentGame.setOnScoreChangedListener(this);
-	this.currentGame.setOnTimeRemainingChangedListener(this);
 	
 	return v;
     }
@@ -88,26 +83,15 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onScoreChanged(long score) {
-	TextView scoreView = (TextView) getView().findViewById(R.id.textview_score);
-	
-	if(scoreView != null)
-	    scoreView.setText(Long.toString(score));
-    }
-
-    @Override
-    public void onTimeRemainingChanged(long millisecondsRemaining) {
+    public void onScoreChanged(Score score) {
 	View view = getView();
-	if(view == null){
+	if(view == null) {
 	    return;
 	}
 	
-	TextView timeView = (TextView) view.findViewById(R.id.textview_time);
-
-	if (timeView != null) {
-	    Date timeRemaining = new Date(millisecondsRemaining);
-	    DateFormat formatter = new SimpleDateFormat("mm:ss:SSS", Locale.UK);
-	    timeView.setText(formatter.format(timeRemaining));
-	}
+	TextView scoreView = (TextView) view.findViewById(R.id.textview_score);
+	
+	if(scoreView != null)
+	    scoreView.setText(score.getScore());
     }
 }

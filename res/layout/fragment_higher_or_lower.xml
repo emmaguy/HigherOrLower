@@ -5,32 +5,16 @@
     android:background="@color/layout_background"
     tools:context=".HigherOrLowerFragment" >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right">
-
-        <TextView
-            android:id="@+id/textview_time"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:background="@color/score_background"
-            android:textColor="@color/score_score_colour"
-            android:textSize="22sp"/>
-
-        <TextView
-            android:id="@+id/textview_score"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:background="@color/score_background"
-            android:textColor="@color/score_score_colour"
-            android:textSize="30sp"
-            android:layout_below="@id/textview_time"/>
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textview_score"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="5dp"
+        android:background="@color/score_background"
+        android:gravity="center"
+        android:layout_gravity="top|right"
+        android:textColor="@color/score_score_colour"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imageview_current_card"

@@ -10,7 +10,7 @@ import dev.emmaguy.higherorlower.R;
 
 public class SplashScreenFragment extends Fragment implements View.OnClickListener {
     
-    private OnSinglePlayerButtonClicked singlePlayerButtonClickedListener;
+    private OnPlayersChosen singlePlayerButtonClickedListener;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class SplashScreenFragment extends Fragment implements View.OnClickListen
 	return v;
     }
     
-    public interface OnSinglePlayerButtonClicked {
+    public interface OnPlayersChosen {
 	public void onSinglePlayerButtonClicked();
     }
     
@@ -28,9 +28,9 @@ public class SplashScreenFragment extends Fragment implements View.OnClickListen
 	super.onAttach(activity);
 
 	try {
-	    singlePlayerButtonClickedListener = (OnSinglePlayerButtonClicked) activity;
+	    singlePlayerButtonClickedListener = (OnPlayersChosen) activity;
 	} catch (ClassCastException e) {
-	    throw new ClassCastException(activity.toString() + " must implement OnSinglePlayerButtonClicked");
+	    throw new ClassCastException(activity.toString() + " must implement OnPlayersChosen");
 	}
     }
 

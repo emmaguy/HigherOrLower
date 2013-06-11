@@ -19,20 +19,19 @@ public class HighscoreGame implements HigherOrLowerGame {
     private Card nextCard;
     private OnCardChanged cardChangedListener;
     private OnScoreChanged scoreChangedListener;
-    private OnTimeRemainingChanged timeRemainingListener;
     
     private final Runnable updateTimeRemainingTask = new Runnable() {
 	   public void run() {       
 	       millisecondsRemaining = deck.getMaxTimeToSolve() - (getTime() - startTime);
 	       if(millisecondsRemaining <= 0){
-		   timeRemainingListener.onTimeRemainingChanged(0);
+		   scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 		   gameOverListener.onGameOver(new HighscoreGameOver(currentScore, 0));
 		   
 		   stopGame();
 		   return;
 	       }
 	       
-	       timeRemainingListener.onTimeRemainingChanged(millisecondsRemaining);
+	       scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	       handler.postDelayed(this, 1);
 	   }
 	};
@@ -49,11 +48,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     public void setOnScoreChangedListener(OnScoreChanged scoreChanged) {
 	this.scoreChangedListener = scoreChanged;
     }
-    
-    public void setOnTimeRemainingChangedListener(OnTimeRemainingChanged timeRemainingChanged) {
-	this.timeRemainingListener = timeRemainingChanged;
-    }
-    
+ 
     private long getTime() {
 	return System.currentTimeMillis();
     }
@@ -67,7 +62,7 @@ public class HighscoreGame implements HigherOrLowerGame {
 	startTime = getTime();
 	elapsedTime = 0;
 	
-	scoreChangedListener.onScoreChanged(currentScore);
+	scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	cardChangedListener.onCardChanged(currentCard);
     }
     
@@ -101,7 +96,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     public void higherGuessed() {
 	if(nextCard.getCardNumber().getNumber() > currentCard.getCardNumber().getNumber()) {
 	    currentScore++;
-	    scoreChangedListener.onScoreChanged(currentScore);
+	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
     }
@@ -110,7 +105,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     public void sameGuessed() {
 	if(nextCard.getCardNumber().getNumber() == currentCard.getCardNumber().getNumber()) {
 	    currentScore++;
-	    scoreChangedListener.onScoreChanged(currentScore);
+	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
     }
@@ -119,7 +114,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     public void lowerGuessed() {
 	if(nextCard.getCardNumber().getNumber() < currentCard.getCardNumber().getNumber()) {
 	    currentScore++;
-	    scoreChangedListener.onScoreChanged(currentScore);
+	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
     }

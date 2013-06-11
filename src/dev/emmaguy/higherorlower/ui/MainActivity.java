@@ -7,13 +7,13 @@ import dev.emmaguy.higherorlower.GameOver;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnGameOver;
 import dev.emmaguy.higherorlower.HighscoreGame;
 import dev.emmaguy.higherorlower.R;
+import dev.emmaguy.higherorlower.SuddenDeathGame;
 import dev.emmaguy.higherorlower.deck.Deck;
 import dev.emmaguy.higherorlower.deck.FullDeckBuilder;
-import dev.emmaguy.higherorlower.ui.SinglePlayerFragment.OnHighscoreModeButtonClicked;
-import dev.emmaguy.higherorlower.ui.SplashScreenFragment.OnSinglePlayerButtonClicked;
+import dev.emmaguy.higherorlower.ui.SinglePlayerFragment.OnSinglePlayerModeChosen;
+import dev.emmaguy.higherorlower.ui.SplashScreenFragment.OnPlayersChosen;
 
-public class MainActivity extends FragmentActivity implements OnGameOver, OnHighscoreModeButtonClicked,
-	OnSinglePlayerButtonClicked {
+public class MainActivity extends FragmentActivity implements OnGameOver, OnSinglePlayerModeChosen, OnPlayersChosen {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,5 +57,17 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnHigh
 	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment);
 	transaction.addToBackStack(null);
 	transaction.commit();
+    }
+
+    @Override
+    public void onSuddenDeathModeButtonClicked() {
+	HigherOrLowerFragment higherOrLowerGameFragment = new HigherOrLowerFragment();
+	higherOrLowerGameFragment.setArguments(new SuddenDeathGame(new Deck(new FullDeckBuilder().build(), 120000), // 2 minutes
+		(OnGameOver) this));
+
+	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
+	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment);
+	transaction.addToBackStack(null);
+	transaction.commit();	
     }
 }
