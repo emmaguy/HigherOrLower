@@ -14,7 +14,7 @@
             android:gravity="left|center_horizontal"
             android:textColor="@color/score_score_colour"
             android:textSize="22sp"
-            android:layout_centerInParent="true" />
+            android:layout_centerHorizontal="true" />
     
     <Button
         android:id="@+id/button_post_score"
@@ -22,7 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_post_to_leaderboard"
-        android:layout_below="@id/textview_results"
-        android:layout_centerInParent="true"/>
+        android:layout_below="@id/textview_results"/>
 
 </RelativeLayout>

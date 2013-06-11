@@ -23,7 +23,8 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	OnTimeRemainingChanged {
 
     private HigherOrLowerGame currentGame;
-
+    private boolean isGameInitialised = false;
+    
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
     }
@@ -39,16 +40,31 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	this.currentGame.setOnCardChangedListener(this);
 	this.currentGame.setOnScoreChangedListener(this);
 	this.currentGame.setOnTimeRemainingChangedListener(this);
-
+	
 	return v;
     }
 
     @Override
     public void onStart() {
 	super.onStart();
-	this.currentGame.startGame();
+	if(!isGameInitialised) {
+	    this.currentGame.startGame();
+	    isGameInitialised = true;
+	}
     }
 
+    @Override
+    public void onResume() {
+	this.currentGame.resumeGame();
+	super.onResume();
+    }
+    
+    @Override
+    public void onStop() {
+	super.onStop();
+	this.currentGame.stopGame();
+    }
+    
     @Override
     public void onClick(View view) {
 	if (view.getId() == R.id.button_higher) {
@@ -58,13 +74,6 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	} else if (view.getId() == R.id.button_lower) {
 	    this.currentGame.lowerGuessed();
 	}
-    }
-
-    @Override
-    public void onDetach(){
-	super.onDetach();
-	
-	this.currentGame.stopGame();
     }
     
     @Override

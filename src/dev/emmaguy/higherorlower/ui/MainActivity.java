@@ -3,8 +3,9 @@ package dev.emmaguy.higherorlower.ui;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import dev.emmaguy.higherorlower.GameOver;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnGameOver;
-import dev.emmaguy.higherorlower.HigherOrLowerHighscoreGame;
+import dev.emmaguy.higherorlower.HighscoreGame;
 import dev.emmaguy.higherorlower.R;
 import dev.emmaguy.higherorlower.deck.Deck;
 import dev.emmaguy.higherorlower.deck.FullDeckBuilder;
@@ -13,13 +14,13 @@ import dev.emmaguy.higherorlower.ui.SplashScreenFragment.OnSinglePlayerButtonCli
 
 public class MainActivity extends FragmentActivity implements OnGameOver, OnHighscoreModeButtonClicked,
 	OnSinglePlayerButtonClicked {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 
 	setContentView(R.layout.activity_main);
-	
+
 	SplashScreenFragment fragment = new SplashScreenFragment();
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
 	transaction.replace(R.id.fragment_container, fragment);
@@ -27,9 +28,9 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnHigh
     }
 
     @Override
-    public void onGameOver(int score, long millisecondsRemaining, int leaderboardId) {
+    public void onGameOver(GameOver gameOver) {
 	ResultsFragment resultsFragment = new ResultsFragment();
-	resultsFragment.setArguments(score, millisecondsRemaining, leaderboardId);
+	resultsFragment.setArguments(gameOver);
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
 	transaction.replace(R.id.fragment_container, resultsFragment);
@@ -49,7 +50,7 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnHigh
     @Override
     public void onHighscoreModeButtonClicked() {
 	HigherOrLowerFragment higherOrLowerGameFragment = new HigherOrLowerFragment();
-	higherOrLowerGameFragment.setArguments(new HigherOrLowerHighscoreGame(new Deck(new FullDeckBuilder().build()),
+	higherOrLowerGameFragment.setArguments(new HighscoreGame(new Deck(new FullDeckBuilder().build(), 120000), // 2 minutes
 		(OnGameOver) this));
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();

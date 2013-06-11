@@ -1,17 +1,17 @@
 package dev.emmaguy.higherorlower;
 
 import android.os.Handler;
-import android.os.SystemClock;
 import dev.emmaguy.higherorlower.card.Card;
 import dev.emmaguy.higherorlower.deck.Deck;
 
-public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
+public class HighscoreGame implements HigherOrLowerGame {
 
     private final Deck deck;
     private OnGameOver gameOverListener;
     
     private int currentScore = 0;
     private long startTime = 0;
+    private long elapsedTime = 0;
     private long millisecondsRemaining = 0;
     
     private final Handler handler = new Handler();
@@ -22,15 +22,13 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
     private OnTimeRemainingChanged timeRemainingListener;
     
     private final Runnable updateTimeRemainingTask = new Runnable() {
-	   public void run() {
-	       final long start = startTime;
-	       final int maxTime = 2000;//120000;
-	       
-	       millisecondsRemaining = maxTime - (SystemClock.uptimeMillis() - start);
+	   public void run() {       
+	       millisecondsRemaining = deck.getMaxTimeToSolve() - (getTime() - startTime);
 	       if(millisecondsRemaining <= 0){
 		   timeRemainingListener.onTimeRemainingChanged(0);
-		   gameOverListener.onGameOver(currentScore, 0, R.string.leaderboard_id_highscore);
-		   handler.removeCallbacks(updateTimeRemainingTask);
+		   gameOverListener.onGameOver(new HighscoreGameOver(currentScore, 0));
+		   
+		   stopGame();
 		   return;
 	       }
 	       
@@ -39,7 +37,7 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	   }
 	};
     
-    public HigherOrLowerHighscoreGame(Deck deck, OnGameOver gameOverListener) {
+    public HighscoreGame(Deck deck, OnGameOver gameOverListener) {
 	this.deck = deck;
 	this.gameOverListener = gameOverListener;
     }
@@ -56,23 +54,42 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	this.timeRemainingListener = timeRemainingChanged;
     }
     
+    private long getTime() {
+	return System.currentTimeMillis();
+    }
+    
     public void startGame() {
 	currentCard = deck.getNextCard();
 	nextCard = deck.getNextCard();
 	
-	startTime = SystemClock.uptimeMillis();
-        handler.removeCallbacks(updateTimeRemainingTask);
-        handler.postDelayed(updateTimeRemainingTask, 100);
+	handler.removeCallbacks(updateTimeRemainingTask);
+	handler.postDelayed(updateTimeRemainingTask, 1);
+	startTime = getTime();
+	elapsedTime = 0;
 	
 	scoreChangedListener.onScoreChanged(currentScore);
 	cardChangedListener.onCardChanged(currentCard);
+    }
+    
+    @Override
+    public void stopGame() {
+	elapsedTime = getTime() - startTime;
+	handler.removeCallbacks(updateTimeRemainingTask);
+    }
+    
+    @Override
+    public void resumeGame() {
+	startTime = getTime() - elapsedTime;
+	handler.removeCallbacks(updateTimeRemainingTask);
+	handler.postDelayed(updateTimeRemainingTask, 1);
     }
     
     private void moveToNextCard() {
 	currentCard = nextCard;
 	
 	if(!deck.hasCardsRemaining()){
-	    gameOverListener.onGameOver(currentScore, millisecondsRemaining, R.string.leaderboard_id_highscore);
+	    gameOverListener.onGameOver(new HighscoreGameOver(currentScore, millisecondsRemaining));
+	    stopGame();
 	    return;
 	}
 	
@@ -105,14 +122,5 @@ public class HigherOrLowerHighscoreGame implements HigherOrLowerGame {
 	    scoreChangedListener.onScoreChanged(currentScore);
 	}
 	moveToNextCard();
-    }
-
-    @Override
-    public void stopGame() {
-	handler.removeCallbacks(updateTimeRemainingTask);
-	cardChangedListener = null;
-	scoreChangedListener = null;
-	timeRemainingListener = null;
-	gameOverListener = null;
     }
 }
