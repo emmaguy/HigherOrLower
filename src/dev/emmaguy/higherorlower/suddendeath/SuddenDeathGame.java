@@ -1,5 +1,6 @@
-package dev.emmaguy.higherorlower;
+package dev.emmaguy.higherorlower.suddendeath;
 
+import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.card.Card;
 import dev.emmaguy.higherorlower.deck.Deck;
 

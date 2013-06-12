@@ -1,4 +1,6 @@
-package dev.emmaguy.higherorlower;
+package dev.emmaguy.higherorlower.suddendeath;
+
+import dev.emmaguy.higherorlower.Score;
 
 public class SuddenDeathScore implements Score {
 

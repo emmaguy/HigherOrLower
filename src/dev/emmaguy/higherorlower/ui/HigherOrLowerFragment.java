@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import dev.emmaguy.higherorlower.HigherOrLowerGame;
-import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
-import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
 import dev.emmaguy.higherorlower.R;
 import dev.emmaguy.higherorlower.Score;
+import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
+import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
 import dev.emmaguy.higherorlower.card.Card;
 
 public class HigherOrLowerFragment extends Fragment implements View.OnClickListener, OnCardChanged, OnScoreChanged {

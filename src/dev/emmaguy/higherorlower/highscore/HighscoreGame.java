@@ -1,6 +1,7 @@
-package dev.emmaguy.higherorlower;
+package dev.emmaguy.higherorlower.highscore;
 
 import android.os.Handler;
+import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.card.Card;
 import dev.emmaguy.higherorlower.deck.Deck;
 

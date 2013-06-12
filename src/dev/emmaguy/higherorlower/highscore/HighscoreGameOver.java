@@ -1,9 +1,12 @@
-package dev.emmaguy.higherorlower;
+package dev.emmaguy.higherorlower.highscore;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import dev.emmaguy.higherorlower.GameOver;
+import dev.emmaguy.higherorlower.R;
 
 public class HighscoreGameOver implements GameOver {
 
@@ -23,8 +26,12 @@ public class HighscoreGameOver implements GameOver {
 	return millisecondsRemaining <= 0;
     }
     
-    public int getLeaderboardId(){
+    public int getLeaderboardId() {
 	return R.string.leaderboard_id_highscore;
+    }
+    
+    public long getFinalScore() {
+	return (long) total;
     }
 
     @Override

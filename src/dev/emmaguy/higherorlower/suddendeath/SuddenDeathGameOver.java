@@ -1,4 +1,7 @@
-package dev.emmaguy.higherorlower;
+package dev.emmaguy.higherorlower.suddendeath;
+
+import dev.emmaguy.higherorlower.GameOver;
+import dev.emmaguy.higherorlower.R;
 
 public class SuddenDeathGameOver implements GameOver {
 
@@ -20,5 +23,10 @@ public class SuddenDeathGameOver implements GameOver {
     public String getScore() {
 
 	return "Final score: " + score;
+    }
+
+    @Override
+    public long getFinalScore() {
+	return score;
     }
 }
