@@ -83,8 +83,8 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 		    @Override
 		    public void onSuccess() {
 		        Toast.makeText(getActivity(), "Score submission successful", Toast.LENGTH_SHORT).show();
-		        Intent launchOKLogin = new Intent(getActivity(), OKLeaderboardsActivity.class);
-		        startActivityForResult(launchOKLogin, MainActivity.SHOW_SPLASH_SCREEN_AFTER_LEADERBOARD);
+		        Intent launchOKLeaderboard = new Intent(getActivity(), OKLeaderboardsActivity.class);
+		        startActivityForResult(launchOKLeaderboard, MainActivity.SHOW_SPLASH_SCREEN_AFTER_LEADERBOARD);
 		    }
 
 		    @Override

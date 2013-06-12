@@ -28,7 +28,7 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 
 	showSplashScreen();
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	if (requestCode == SHOW_SPLASH_SCREEN_AFTER_LEADERBOARD) {
