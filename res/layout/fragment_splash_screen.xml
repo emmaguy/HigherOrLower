@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/layout_background"
-    android:gravity="center"
     tools:context=".SplashScreenFragment" >
 
     <Button
         android:id="@+id/button_single_player"
         style="@style/menu_buttons"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_single_player" />
@@ -16,9 +16,36 @@
     <Button
         android:id="@+id/button_multiplayer"
         style="@style/menu_buttons"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/button_single_player"
         android:text="@string/button_multiplayer" />
+
+        <Button
+        android:id="@+id/button_view_leaderboards"
+        style="@style/menu_buttons"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_multiplayer"
+        android:text="@string/view_leaderboards" />
+    
+    <Button
+        android:id="@+id/button_sign_in_or_out"
+        style="@style/menu_buttons"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_view_leaderboards"
+        android:text="@string/sign_out" />
+    
+     <TextView
+        android:id="@+id/textview_signed_in_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_sign_in_or_out"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

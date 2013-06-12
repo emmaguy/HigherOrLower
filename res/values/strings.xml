@@ -18,4 +18,6 @@
 	<string name="sign_out">Sign Out</string>
 	<string name="button_post_to_leaderboard">Post score to leaderboard</string>
 	
+	<string name="view_leaderboards">View Leaderboards</string>
+	
 </resources>
