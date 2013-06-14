@@ -17,6 +17,14 @@
         android:textSize="18sp" />
 
     <ImageView
+        android:id="@+id/imageview_last_card"
+        android:layout_width="108dp"
+        android:layout_height="156dp"
+        android:layout_gravity="left|center_vertical"
+        android:contentDescription="@string/current_card_description"
+        android:src="@drawable/card_back" />
+    
+    <ImageView
         android:id="@+id/imageview_current_card"
         android:layout_width="135dp"
         android:layout_height="195dp"
