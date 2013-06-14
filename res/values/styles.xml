@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="menu_buttons" parent="android:Widget.Holo.Button">
-        <item name="android:background">#0e3e5e</item>
+        <item name="android:background">@drawable/button</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:width">150dp</item>
-        <item name="android:height">40dp</item>
-        <item name="android:layout_margin">5dp</item>
+        <item name="android:width">175dp</item>
+        <item name="android:height">35dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="layout_background">
+		<item name="android:background">@drawable/background_gradient</item>        	
+    </style>
+	<style name="higher_or_lower_buttons_background">
+		<item name="android:background">#efefef</item>        	
     </style>
 </resources>
