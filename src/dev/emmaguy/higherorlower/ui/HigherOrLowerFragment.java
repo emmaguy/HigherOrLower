@@ -1,7 +1,5 @@
 package dev.emmaguy.higherorlower.ui;
 
-import java.util.Locale;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -80,58 +79,69 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCardChanged(final Card currentCard) {
 
+	final ImageView nextCardView = (ImageView) getView().findViewById(R.id.imageview_next_card);
 	final ImageView lastCardView = (ImageView) getView().findViewById(R.id.imageview_last_card);
 	final ImageView currentCardView = (ImageView) getView().findViewById(R.id.imageview_current_card);
 
-	if (isFirstCard) {
-	    isFirstCard = false;
-	    changeCard(currentCard, lastCardView, currentCardView);
-	} else {
-	    final AnimationSet animationSet = new AnimationSet(false);
-	    animationSet.setFillAfter(false);
+	final AnimationSet animationSet = new AnimationSet(false);
+	animationSet.setFillAfter(true);
 
-	    ScaleAnimation scale = new ScaleAnimation(1.0f, 0.8f, 1.0f, 0.8f);
-	    scale.setDuration(500);
+	ScaleAnimation scale = new ScaleAnimation(1.0f, 0.8f, 1.0f, 0.8f);
+	scale.setDuration(500);
 
-	    TranslateAnimation trans = new TranslateAnimation(0, 0, TranslateAnimation.ABSOLUTE, 0.8f - currentCardView.getLeft(), 
-		    					      0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
-	    trans.setDuration(500);
+	TranslateAnimation slideCurrentCardToRight = new TranslateAnimation(0, 0, TranslateAnimation.ABSOLUTE,
+		0.8f - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
+	slideCurrentCardToRight.setDuration(500);
 
-	    animationSet.addAnimation(scale);
-	    animationSet.addAnimation(trans);
+	animationSet.addAnimation(scale);
+	animationSet.addAnimation(slideCurrentCardToRight);
 
-	    animationSet.setAnimationListener(new AnimationListener() {
-		@Override
-		public void onAnimationStart(Animation animation) {
+	animationSet.setAnimationListener(new AnimationListener() {
+	    @Override
+	    public void onAnimationStart(Animation animation) { }
+
+	    @Override
+	    public void onAnimationRepeat(Animation animation) { }
+
+	    @Override
+	    public void onAnimationEnd(Animation animation) {
+		
+		Object tag = nextCardView.getTag();
+		if (tag != null && !isFirstCard) {
+		    lastCardView.setImageResource(Integer.parseInt(tag.toString()));
 		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
+		
+		Object currentCardTag = currentCardView.getTag();
+		if(currentCardTag != null) {
+		    lastCardView.setTag(currentCardTag);
 		}
+		
+		currentCardView.setTag(tag);
+		isFirstCard = false;
+	    }
+	});
 
-		@Override
-		public void onAnimationEnd(Animation animation) {
-		    changeCard(currentCard, lastCardView, currentCardView);
-		}
-	    });
+	TranslateAnimation dealNewCard = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
+	dealNewCard.setDuration(500);
+	dealNewCard.setInterpolator(new DecelerateInterpolator());
+	
+	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable", "dev.emmaguy.higherorlower");
 
-	    currentCardView.startAnimation(animationSet);
-	}
-    }
-
-    private void changeCard(final Card currentCard, final ImageView lastCardView, final ImageView currentCardView) {
-	String cardNumber = currentCard.getCardNumber().toString().toLowerCase(Locale.UK);
-	String cardSuit = currentCard.getSuit().toString().toLowerCase(Locale.UK);
-	String name = "card_" + cardNumber + "_" + cardSuit;
-	int currentCardIdentifier = getResources().getIdentifier(name, "drawable", "dev.emmaguy.higherorlower");
-
+	nextCardView.setImageResource(currentCardIdentifier);
+	nextCardView.setTag(currentCardIdentifier);
+	
 	Object tag = currentCardView.getTag();
 	if (tag != null) {
-	    lastCardView.setImageResource(Integer.parseInt(tag.toString()));
+	    currentCardView.setImageResource(Integer.parseInt(tag.toString()));
 	}
-
-	currentCardView.setImageResource(currentCardIdentifier);
-	currentCardView.setTag(currentCardIdentifier);
+	
+	Object lastTag = lastCardView.getTag();
+	if (lastTag != null) {
+	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
+	}
+	
+	nextCardView.startAnimation(dealNewCard);
+	currentCardView.startAnimation(animationSet);
     }
 
     @Override

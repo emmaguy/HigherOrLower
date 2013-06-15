@@ -1,5 +1,7 @@
 package dev.emmaguy.higherorlower.card;
 
+import java.util.Locale;
+
 public class Card {
     private final Suit suit;
     private final CardNumber number;
@@ -13,8 +15,14 @@ public class Card {
 	return number;
     }
     
-    public Suit getSuit(){
+    private Suit getSuit(){
 	return suit;
+    }
+
+    public String getResourceName() {
+	String cardNumber = getCardNumber().toString().toLowerCase(Locale.UK);
+	String cardSuit = getSuit().toString().toLowerCase(Locale.UK);
+	return "card_" + cardNumber + "_" + cardSuit;
     }
     
 }

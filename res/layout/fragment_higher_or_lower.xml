@@ -30,6 +30,13 @@
         android:layout_height="195dp"
         android:layout_gravity="center"
         android:contentDescription="@string/current_card_description" />
+    
+    <ImageView
+        android:id="@+id/imageview_next_card"
+        android:layout_width="135dp"
+        android:layout_height="195dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/current_card_description" />
 
     <LinearLayout
         android:layout_width="match_parent"
