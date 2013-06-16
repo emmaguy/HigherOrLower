@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:contentDescription="@string/current_card_description" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
@@ -48,33 +48,34 @@
 
         <ImageButton
             android:id="@+id/button_higher"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/button_higher"
-            android:src="@drawable/up"
-            android:contentDescription="@string/button_higher" />
+            android:src="@drawable/button_higher"
+            android:contentDescription="@string/button_higher"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true" />
 
         <ImageButton
             android:id="@+id/button_same"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/button_same"
-            android:src="@drawable/equals"
-            android:contentDescription="@string/button_same" />
+            android:src="@drawable/button_same"
+            android:contentDescription="@string/button_same"
+            android:layout_toLeftOf="@id/button_higher"
+            android:layout_centerInParent="true"/>
         
         <ImageButton
             android:id="@+id/button_lower"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/button_lower"
-            android:src="@drawable/down"
-            android:contentDescription="@string/button_lower" />
-    </LinearLayout>
-
+            android:src="@drawable/button_lower"
+            android:contentDescription="@string/button_lower"
+            android:layout_toLeftOf="@id/button_same"
+            android:layout_centerHorizontal="true" 
+            android:layout_alignParentRight="true"/>
+        
+    </RelativeLayout>
 </FrameLayout>
