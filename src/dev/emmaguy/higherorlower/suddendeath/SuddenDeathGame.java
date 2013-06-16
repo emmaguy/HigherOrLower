@@ -3,6 +3,8 @@ package dev.emmaguy.higherorlower.suddendeath;
 import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.card.Card;
 import dev.emmaguy.higherorlower.deck.Deck;
+import dev.emmaguy.higherorlower.ui.MainActivity;
+import dev.emmaguy.higherorlower.ui.OnAudioAction;
 
 public class SuddenDeathGame implements HigherOrLowerGame {
 
@@ -15,10 +17,12 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     private OnCardChanged cardChangedListener;
     private OnScoreChanged scoreChangedListener;
     private OnGameOver gameOverListener;
+    private OnAudioAction audioActionListener;
 
-    public SuddenDeathGame(Deck deck, OnGameOver gameOverListener) {
+    public SuddenDeathGame(Deck deck, OnGameOver gameOverListener, OnAudioAction onAudioAction) {
 	this.deck = deck;
 	this.gameOverListener = gameOverListener;
+	this.audioActionListener = onAudioAction;
     }
     
     public void setOnCardChangedListener(OnCardChanged cardChanged) {
@@ -57,9 +61,7 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     @Override
     public void higherGuessed() {
 	if(nextCard.getCardNumber().getNumber() > currentCard.getCardNumber().getNumber()) {
-	    currentScore += 100;
-	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
-	    moveToNextCard();
+	    correctAnswer();
 	} else { 
 	    gameOver(); 
 	}
@@ -68,20 +70,23 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     @Override
     public void sameGuessed() {
 	if(nextCard.getCardNumber().getNumber() == currentCard.getCardNumber().getNumber()) {
-	    currentScore += 100;
-	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
-	    moveToNextCard();
+	    correctAnswer();
 	} else { 
 	    gameOver(); 
 	}
+    }
+
+    private void correctAnswer() {
+	currentScore += 100;
+	audioActionListener.onPlaySound(MainActivity.CORRECT_ANSWER);
+	scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
+	moveToNextCard();
     }
     
     @Override
     public void lowerGuessed() {
 	if(nextCard.getCardNumber().getNumber() < currentCard.getCardNumber().getNumber()) {
-	    currentScore += 100;
-	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
-	    moveToNextCard();
+	    correctAnswer();
 	} else { 
 	    gameOver(); 
 	}

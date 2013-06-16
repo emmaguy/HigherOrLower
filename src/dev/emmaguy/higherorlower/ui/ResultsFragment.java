@@ -18,6 +18,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
     private final Handler handler = new Handler();
     private OnLeaderboardAPIAction leaderboardActionListener;
     private GameOver gameOver;
+    private OnAudioAction audioActionListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 		return;
 	    }
 
+	    audioActionListener.onPlaySound(MainActivity.COINS_COUNTING);
 	    handler.postDelayed(this, 1);
 	}
 
@@ -63,8 +65,9 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 
 	try {
 	    leaderboardActionListener = (OnLeaderboardAPIAction) activity;
+	    audioActionListener = (OnAudioAction) activity;
 	} catch (ClassCastException e) {
-	    throw new ClassCastException(activity.toString() + " must implement OnLeaderboardAPIAction");
+	    throw new ClassCastException(activity.toString() + " must implement OnLeaderboardAPIAction and OnAudioAction");
 	}
     }
 

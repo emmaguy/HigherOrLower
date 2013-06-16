@@ -18,6 +18,7 @@
     <Button
         android:id="@+id/button_post_score"
         style="@style/menu_buttons"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tablelayout_results"
