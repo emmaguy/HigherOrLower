@@ -25,6 +25,8 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     private HigherOrLowerGame currentGame;
     private boolean isGameInitialised = false;
     private boolean isFirstCard = true;
+    private AnimationSet slideOldCardToLeftAnimationSet;
+    private TranslateAnimation dealNewCardAnimation;
 
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
@@ -83,6 +85,46 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	final ImageView lastCardView = (ImageView) getView().findViewById(R.id.imageview_last_card);
 	final ImageView currentCardView = (ImageView) getView().findViewById(R.id.imageview_current_card);
 
+	if(slideOldCardToLeftAnimationSet != null && !slideOldCardToLeftAnimationSet.hasEnded()) {
+	    currentCardView.clearAnimation();
+	}
+	
+	if(dealNewCardAnimation != null && !dealNewCardAnimation.hasEnded()) {
+	    nextCardView.clearAnimation();
+	}
+	
+	slideOldCardToLeftAnimationSet = getSlideOldCardToLeftAnimation(nextCardView, lastCardView, currentCardView);
+	dealNewCardAnimation = getDealNewCardAnimation(currentCard, nextCardView, lastCardView, currentCardView);
+	
+	nextCardView.startAnimation(dealNewCardAnimation);
+	currentCardView.startAnimation(slideOldCardToLeftAnimationSet);
+    }
+
+    private TranslateAnimation getDealNewCardAnimation(final Card currentCard, final ImageView nextCardView,
+	    final ImageView lastCardView, final ImageView currentCardView) {
+	TranslateAnimation dealNewCard = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
+	dealNewCard.setDuration(500);
+	dealNewCard.setInterpolator(new DecelerateInterpolator());
+	
+	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable", "dev.emmaguy.higherorlower");
+
+	nextCardView.setImageResource(currentCardIdentifier);
+	nextCardView.setTag(currentCardIdentifier);
+	
+	Object tag = currentCardView.getTag();
+	if (tag != null) {
+	    currentCardView.setImageResource(Integer.parseInt(tag.toString()));
+	}
+	
+	Object lastTag = lastCardView.getTag();
+	if (lastTag != null) {
+	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
+	}
+	return dealNewCard;
+    }
+
+    private AnimationSet getSlideOldCardToLeftAnimation(final ImageView nextCardView, final ImageView lastCardView,
+	    final ImageView currentCardView) {
 	final AnimationSet animationSet = new AnimationSet(false);
 	animationSet.setFillAfter(true);
 
@@ -120,28 +162,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 		isFirstCard = false;
 	    }
 	});
-
-	TranslateAnimation dealNewCard = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f);
-	dealNewCard.setDuration(500);
-	dealNewCard.setInterpolator(new DecelerateInterpolator());
-	
-	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable", "dev.emmaguy.higherorlower");
-
-	nextCardView.setImageResource(currentCardIdentifier);
-	nextCardView.setTag(currentCardIdentifier);
-	
-	Object tag = currentCardView.getTag();
-	if (tag != null) {
-	    currentCardView.setImageResource(Integer.parseInt(tag.toString()));
-	}
-	
-	Object lastTag = lastCardView.getTag();
-	if (lastTag != null) {
-	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
-	}
-	
-	nextCardView.startAnimation(dealNewCard);
-	currentCardView.startAnimation(animationSet);
+	return animationSet;
     }
 
     @Override
