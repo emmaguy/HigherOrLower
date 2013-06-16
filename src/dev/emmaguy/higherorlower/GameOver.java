@@ -1,9 +1,13 @@
 package dev.emmaguy.higherorlower;
 
+import android.content.Context;
+import android.widget.TableRow;
+
 public interface GameOver {
 
-    boolean isScoreCalculationFinished();
+    boolean isScoreBeingCalculated();
     int getLeaderboardId();
     long getFinalScore();
-    String getScore();
+    
+    TableRow[] getScoreCountdownUi(Context context);
 }

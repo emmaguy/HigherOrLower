@@ -57,7 +57,7 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     @Override
     public void higherGuessed() {
 	if(nextCard.getCardNumber().getNumber() > currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += 100;
 	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
 	    moveToNextCard();
 	} else { 
@@ -68,7 +68,7 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     @Override
     public void sameGuessed() {
 	if(nextCard.getCardNumber().getNumber() == currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += 100;
 	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
 	    moveToNextCard();
 	} else { 
@@ -79,7 +79,7 @@ public class SuddenDeathGame implements HigherOrLowerGame {
     @Override
     public void lowerGuessed() {
 	if(nextCard.getCardNumber().getNumber() < currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += 100;
 	    scoreChangedListener.onScoreChanged(new SuddenDeathScore(currentScore));
 	    moveToNextCard();
 	} else { 

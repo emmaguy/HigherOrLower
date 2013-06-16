@@ -138,6 +138,7 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 
     private void submitScore(long total, int leaderboardId) {
 	OKScore score = new OKScore();
+	Toast.makeText(getApplicationContext(), "Submitting score of: " + total, Toast.LENGTH_SHORT).show();
 	score.setScoreValue(total);
 	score.setOKLeaderboardID(leaderboardId);
 	score.submitScore(new OKScore.ScoreRequestResponseHandler() {

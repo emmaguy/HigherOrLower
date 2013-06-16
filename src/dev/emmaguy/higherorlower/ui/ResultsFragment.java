@@ -7,7 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import dev.emmaguy.higherorlower.GameOver;
 import dev.emmaguy.higherorlower.OnLeaderboardAPIAction;
 import dev.emmaguy.higherorlower.R;
@@ -32,16 +33,27 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 
     private Runnable updateResultTask = new Runnable() {
 	public void run() {
-	    final TextView resultsView = (TextView) getView().findViewById(R.id.textview_results);
+	    final TableLayout resultsTableLayout = (TableLayout) getView().findViewById(R.id.tablelayout_results);
 
-	    resultsView.setText(gameOver.getScore());
-	    if (gameOver.isScoreCalculationFinished()) {
+	    updateResultsUi(resultsTableLayout);
+
+	    if (!gameOver.isScoreBeingCalculated()) {
 		handler.removeCallbacks(updateResultTask);
-		resultsView.setText(gameOver.getScore());
+		updateResultsUi(resultsTableLayout);
 		return;
 	    }
 
 	    handler.postDelayed(this, 1);
+	}
+
+	private void updateResultsUi(final TableLayout resultsTableLayout) {
+
+	    resultsTableLayout.removeAllViews();
+	    TableRow[] rows = gameOver.getScoreCountdownUi(getActivity().getApplicationContext());
+	    for (TableRow row : rows) {
+		resultsTableLayout.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,
+			TableLayout.LayoutParams.WRAP_CONTENT));
+	    }
 	}
     };
 
@@ -74,7 +86,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 	if (view.getId() == R.id.button_post_score) {
 	    leaderboardActionListener.onSubmitScore(gameOver.getFinalScore(),
 		    Integer.parseInt(getResources().getString(gameOver.getLeaderboardId())));
-	} else if(view.getId() == R.id.button_back) {
+	} else if (view.getId() == R.id.button_back) {
 	    getActivity().onBackPressed();
 	}
     }

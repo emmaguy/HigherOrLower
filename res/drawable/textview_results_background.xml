@@ -6,6 +6,12 @@
         android:endColor="#DADDF2"
         android:startColor="#DAE2F2" />
 
+    <padding
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="8dp" />
+
     <stroke
         android:width="5dip"
         android:color="#4fa5d5" />

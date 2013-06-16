@@ -1,18 +1,22 @@
 package dev.emmaguy.higherorlower.suddendeath;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.widget.TableRow;
 import dev.emmaguy.higherorlower.GameOver;
 import dev.emmaguy.higherorlower.R;
+import dev.emmaguy.higherorlower.ui.ResultsRowBuilder;
 
 public class SuddenDeathGameOver implements GameOver {
 
-    private final int score;
+    private final Integer score;
 
     public SuddenDeathGameOver(int score) {
 	this.score = score;
     }
 
-    public boolean isScoreCalculationFinished() {
-	return true;
+    public boolean isScoreBeingCalculated() {
+	return false;
     }
     
     public int getLeaderboardId(){
@@ -20,9 +24,10 @@ public class SuddenDeathGameOver implements GameOver {
     }
 
     @Override
-    public String getScore() {
+    public TableRow[] getScoreCountdownUi(Context context) {
+	ResultsRowBuilder rowBuilder = new ResultsRowBuilder(context);
 
-	return "Final score: " + score;
+	return new TableRow[] { rowBuilder.createRow("Score:", score.toString(), Color.BLACK) };
     }
 
     @Override

@@ -1,36 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/layout_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/layout_background"
     android:gravity="center"
     tools:context=".ResultsFragment" >
-    
-    <TextView
-            android:id="@+id/textview_results"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
-            android:background="@drawable/textview_results_background"
-            android:gravity="center"
-            android:textColor="@color/score_score_colour"
-            android:textSize="22sp"
-            android:layout_margin="10dp"
-            android:layout_centerHorizontal="true" />
-    
+
+    <TableLayout
+        android:id="@+id/tablelayout_results"
+        android:layout_width="190dp"
+        android:layout_height="165dp"
+        android:layout_centerHorizontal="true"
+        android:stretchColumns="true"
+        android:background="@drawable/textview_results_background"
+        android:gravity="center"/>
+
     <Button
         android:id="@+id/button_post_score"
         style="@style/menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_post_to_leaderboard"
-        android:layout_below="@id/textview_results"/>
-     
-     <Button
+        android:layout_below="@id/tablelayout_results"
+        android:text="@string/button_post_to_leaderboard" />
+
+    <Button
         android:id="@+id/button_back"
         style="@style/menu_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_back"
-        android:layout_below="@id/button_post_score"/>
+        android:layout_below="@id/button_post_score"
+        android:text="@string/button_back" />
 
 </RelativeLayout>

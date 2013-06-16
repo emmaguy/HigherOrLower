@@ -7,6 +7,7 @@ import dev.emmaguy.higherorlower.deck.Deck;
 
 public class HighscoreGame implements HigherOrLowerGame {
 
+    public static final int SCORE_INTERVAL = 100;
     private final Deck deck;
     private OnGameOver gameOverListener;
     
@@ -96,7 +97,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     @Override
     public void higherGuessed() {
 	if(nextCard.getCardNumber().getNumber() > currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += SCORE_INTERVAL;
 	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
@@ -105,7 +106,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     @Override
     public void sameGuessed() {
 	if(nextCard.getCardNumber().getNumber() == currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += SCORE_INTERVAL;
 	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
@@ -114,7 +115,7 @@ public class HighscoreGame implements HigherOrLowerGame {
     @Override
     public void lowerGuessed() {
 	if(nextCard.getCardNumber().getNumber() < currentCard.getCardNumber().getNumber()) {
-	    currentScore++;
+	    currentScore += SCORE_INTERVAL;
 	    scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 	}
 	moveToNextCard();
