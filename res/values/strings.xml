@@ -19,5 +19,6 @@
 	<string name="button_post_to_leaderboard">Post to Leaderboard</string>
 	
 	<string name="view_leaderboards">View Leaderboards</string>
+	<string name="button_back">Back</string>
 	
 </resources>

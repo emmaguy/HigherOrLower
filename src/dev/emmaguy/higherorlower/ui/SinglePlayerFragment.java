@@ -17,6 +17,7 @@ public class SinglePlayerFragment extends Fragment implements View.OnClickListen
 	View v = inflater.inflate(R.layout.fragment_single_player, null);
 	v.findViewById(R.id.button_highscore_mode).setOnClickListener(this);
 	v.findViewById(R.id.button_sudden_death).setOnClickListener(this);
+	v.findViewById(R.id.button_back_to_splash_screen).setOnClickListener(this);
 	return v;
     }
     
@@ -42,6 +43,8 @@ public class SinglePlayerFragment extends Fragment implements View.OnClickListen
 	    buttonClickedListener.onHighscoreModeButtonClicked();
 	} else if (view.getId() == R.id.button_sudden_death) {
 	    buttonClickedListener.onSuddenDeathModeButtonClicked();
+	} else if(view.getId() == R.id.button_back_to_splash_screen) {
+	    getActivity().onBackPressed();
 	}
     }
 }

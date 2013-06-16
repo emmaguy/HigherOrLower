@@ -22,6 +22,7 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	View v = inflater.inflate(R.layout.fragment_results, null);
 	v.findViewById(R.id.button_post_score).setOnClickListener(this);
+	v.findViewById(R.id.button_back).setOnClickListener(this);
 	return v;
     }
 
@@ -73,6 +74,8 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
 	if (view.getId() == R.id.button_post_score) {
 	    leaderboardActionListener.onSubmitScore(gameOver.getFinalScore(),
 		    Integer.parseInt(getResources().getString(gameOver.getLeaderboardId())));
+	} else if(view.getId() == R.id.button_back) {
+	    getActivity().onBackPressed();
 	}
     }
 }
