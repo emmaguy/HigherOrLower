@@ -1,10 +1,16 @@
 package dev.emmaguy.higherorlower.ui;
 
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
@@ -22,11 +28,14 @@ import dev.emmaguy.higherorlower.card.Card;
 
 public class HigherOrLowerFragment extends Fragment implements View.OnClickListener, OnCardChanged, OnScoreChanged {
 
-    private HigherOrLowerGame currentGame;
-    private boolean isGameInitialised = false;
+    private static final float CORNER_RADIUS_PX = 9.5f;
+    
     private boolean isFirstCard = true;
-    private AnimationSet slideOldCardToLeftAnimationSet;
+    
     private TranslateAnimation dealNewCardAnimation;
+    private HigherOrLowerGame currentGame;
+    private AnimationSet slideOldCardToLeftAnimationSet;
+    
 
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
@@ -43,16 +52,32 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	this.currentGame.setOnCardChangedListener(this);
 	this.currentGame.setOnScoreChangedListener(this);
 
-	return v;
-    }
+	// if we try and start the game before the layout has been done, the width and
+	// height of the ImageViews with the cards will be 0, and thus nothing will show
+	final ImageView lastCardView = (ImageView)v.findViewById(R.id.imageview_last_card);
+	ViewTreeObserver viewTreeObserver = lastCardView.getViewTreeObserver();
+	if (viewTreeObserver.isAlive()) {
+	  viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+	    @Override
+	    public void onGlobalLayout() {
+	      removeOnGlobalLayoutListener(lastCardView);
+	      
+	    }
 
-    @Override
-    public void onStart() {
-	super.onStart();
-	if (!isGameInitialised) {
-	    this.currentGame.startGame();
-	    isGameInitialised = true;
+	    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	    @SuppressWarnings("deprecation")
+	    private void removeOnGlobalLayoutListener(final ImageView lastCardView) {
+		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+		    lastCardView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+		} else {
+		    lastCardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		}
+		currentGame.startGame();
+	    }
+	  });
 	}
+	
+	return v;
     }
 
     @Override
@@ -85,6 +110,10 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	final ImageView lastCardView = (ImageView) getView().findViewById(R.id.imageview_last_card);
 	final ImageView currentCardView = (ImageView) getView().findViewById(R.id.imageview_current_card);
 
+	if(isFirstCard){
+	    updateCard(lastCardView, Integer.valueOf(R.drawable.card_back).toString());
+	}
+	
 	if (slideOldCardToLeftAnimationSet != null && !slideOldCardToLeftAnimationSet.hasEnded()) {
 	    currentCardView.clearAnimation();
 	}
@@ -111,19 +140,40 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable",
 		"dev.emmaguy.higherorlower");
 
-	nextCardView.setImageResource(currentCardIdentifier);
+	updateCard(nextCardView, Integer.valueOf(currentCardIdentifier).toString());
 	nextCardView.setTag(currentCardIdentifier);
 
 	Object tag = currentCardView.getTag();
 	if (tag != null) {
-	    currentCardView.setImageResource(Integer.parseInt(tag.toString()));
+	    updateCard(currentCardView, tag.toString());
 	}
 
 	Object lastTag = lastCardView.getTag();
 	if (lastTag != null) {
-	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
+	    updateCard(lastCardView, lastTag.toString());
 	}
 	return dealNewCard;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @SuppressWarnings("deprecation")
+    private void updateCard(ImageView cardView, String resourceId) {
+	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(resourceId));
+	
+	int measuredWidth = cardView.getMeasuredWidth();
+	int measuredHeight = cardView.getMeasuredHeight();
+	
+	if(measuredHeight <= 0 || measuredWidth <= 0)
+	    return;
+		
+	RoundedCornersDrawable roundedCornersDrawable = 
+		new RoundedCornersDrawable(Bitmap.createScaledBitmap(bitmap, measuredWidth, measuredHeight, true), CORNER_RADIUS_PX);
+
+	if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+	    cardView.setBackgroundDrawable(roundedCornersDrawable);
+	} else {
+	    cardView.setBackground(roundedCornersDrawable);
+	}
     }
 
     private AnimationSet getSlideOldCardToLeftAnimation(final ImageView nextCardView, final ImageView lastCardView,
@@ -155,7 +205,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
 		Object tag = nextCardView.getTag();
 		if (tag != null && !isFirstCard) {
-		    lastCardView.setImageResource(Integer.parseInt(tag.toString()));
+		    updateCard(lastCardView, tag.toString());
 		}
 
 		Object currentCardTag = currentCardView.getTag();
