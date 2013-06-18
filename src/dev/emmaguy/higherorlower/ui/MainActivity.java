@@ -76,8 +76,8 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
     
     @Override
     public void onBackPressed() {
-	
 	if (getSupportFragmentManager().findFragmentByTag("GameOver") != null) {
+	    getSupportFragmentManager().popBackStack();
 	    showSplashScreen();
 	} else {
 	    super.onBackPressed();
