@@ -1,13 +1,14 @@
 package dev.emmaguy.higherorlower.ui;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import io.openkit.OKLoginActivity;
 import io.openkit.OKScore;
 import io.openkit.OKUser;
 import io.openkit.OpenKit;
 import io.openkit.leaderboards.OKLeaderboardsActivity;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -18,8 +19,8 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.widget.Toast;
 import dev.emmaguy.higherorlower.GameOver;
-import dev.emmaguy.higherorlower.OnLeaderboardAPIAction;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnGameOver;
+import dev.emmaguy.higherorlower.OnLeaderboardAPIAction;
 import dev.emmaguy.higherorlower.R;
 import dev.emmaguy.higherorlower.deck.Deck;
 import dev.emmaguy.higherorlower.deck.FullDeckBuilder;
@@ -65,18 +66,29 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	super.onActivityResult(requestCode, resultCode, data);
-
+	
 	if (requestCode == SHOW_SPLASH_SCREEN_AFTER_ACTIVITY) {
 	    showSplashScreen();
 	} else if (requestCode == SUBMIT_SCORE_AFTER_LOGIN_LEADERBOARD) {
 	    submitScore(score, leaderboardId);
 	}
     }
+    
+    @Override
+    public void onBackPressed() {
+	
+	if (getSupportFragmentManager().findFragmentByTag("GameOver") != null) {
+	    showSplashScreen();
+	} else {
+	    super.onBackPressed();
+	}
+    }
 
     private void showSplashScreen() {
 	SplashScreenFragment fragment = new SplashScreenFragment();
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, fragment);
+	transaction.replace(R.id.fragment_container, fragment, "SplashScreen");
+	transaction.addToBackStack("SplashScreen");
 	transaction.commit();
     }
 
@@ -86,7 +98,7 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 	resultsFragment.setArguments(gameOver);
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, resultsFragment);
+	transaction.replace(R.id.fragment_container, resultsFragment, "GameOver");
 	transaction.commit();
     }
 
@@ -95,8 +107,8 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 	SinglePlayerFragment singlePlayerFragment = new SinglePlayerFragment();
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, singlePlayerFragment);
-	transaction.addToBackStack(null);
+	transaction.replace(R.id.fragment_container, singlePlayerFragment, "SinglePlayer");
+	transaction.addToBackStack("SinglePlayer");
 	transaction.commit();
     }
 
@@ -107,8 +119,8 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 		TWO_MINUTES_MILLISECONDS), (OnGameOver) this, (OnAudioAction) this));
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment);
-	transaction.addToBackStack(null);
+	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment, "Highscore");
+	transaction.addToBackStack("Highscore");
 	transaction.commit();
     }
 
@@ -119,8 +131,8 @@ public class MainActivity extends FragmentActivity implements OnGameOver, OnSing
 		TWO_MINUTES_MILLISECONDS), (OnGameOver) this, (OnAudioAction) this));
 
 	FragmentTransaction transaction = (FragmentTransaction) getSupportFragmentManager().beginTransaction();
-	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment);
-	transaction.addToBackStack(null);
+	transaction.replace(R.id.fragment_container, higherOrLowerGameFragment, "SuddenDeath");
+	transaction.addToBackStack("SuddenDeath");
 	transaction.commit();
     }
 
