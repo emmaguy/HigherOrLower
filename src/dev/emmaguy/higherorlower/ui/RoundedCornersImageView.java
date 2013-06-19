@@ -1,16 +1,16 @@
 package dev.emmaguy.higherorlower.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 public class RoundedCornersImageView extends ImageView {
 
     private static final float CORNER_RADIUS_PX = 9.5f;
+    private RoundedCornersDrawable roundedCornersDrawable;
 
     public RoundedCornersImageView(Context context) {
 	super(context);
@@ -24,29 +24,30 @@ public class RoundedCornersImageView extends ImageView {
 	super(context, attrs, defStyle);
     }
     
-//    @Override
-//    public void setImageResource(int resourceId) {
-//	updateCard(Integer.valueOf(resourceId).toString());
-//    }
-//    
-//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//    @SuppressWarnings("deprecation")
-//    private void updateCard(String resourceId) {
-//	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(resourceId));
-//
-//	int measuredWidth = getMeasuredWidth();
-//	int measuredHeight = getMeasuredHeight();
-//
-//	if(measuredHeight <= 0 || measuredWidth <= 0)
-//	    return;
-//
-//	RoundedCornersDrawable roundedCornersDrawable = 
-//		new RoundedCornersDrawable(Bitmap.createScaledBitmap(bitmap, measuredWidth, measuredHeight, true), CORNER_RADIUS_PX);
-//
-//	if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//	    setBackgroundDrawable(roundedCornersDrawable);
-//	} else {
-//	    setBackground(roundedCornersDrawable);
-//	}
-//    }
+    @Override
+    public void setImageResource(int resourceId) {
+	super.setImageResource(resourceId);
+	updateCard(Integer.valueOf(resourceId).toString());
+    }
+    
+    @Override
+    public void onDraw(Canvas c) {
+	if(roundedCornersDrawable != null) {
+	    roundedCornersDrawable.draw(c);
+	} else { 
+	    super.onDraw(c);
+	}
+    }
+
+    private void updateCard(String resourceId) {
+	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(resourceId));
+
+	int measuredWidth = getWidth();
+	int measuredHeight = getHeight();
+
+	if(measuredHeight <= 0 || measuredWidth <= 0)
+	    return;
+
+	roundedCornersDrawable = new RoundedCornersDrawable(Bitmap.createScaledBitmap(bitmap, measuredWidth, measuredHeight, true), CORNER_RADIUS_PX);
+    }
 }

@@ -17,6 +17,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
@@ -32,6 +33,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     private TranslateAnimation dealNewCardAnimation;
     private HigherOrLowerGame currentGame;
     private AnimationSet slideOldCardToLeftAnimationSet;
+    protected int width;
 
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
@@ -80,14 +82,16 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	this.currentGame.resumeGame();
 	super.onResume();
 
-	// once we know what size the nextCardView will be, we can scale down last card
 	final ImageView nextCardView = (ImageView) getView().findViewById(R.id.imageview_next_card);
 	nextCardView.post(new Runnable() {
 	    public void run() {
 		nextCardView.measure(0, 0);
 		
+		width = nextCardView.getMeasuredWidth();
+		Toast.makeText(getActivity(), "w: " + width, Toast.LENGTH_SHORT).show();
+		
 		View lastCardView = getView().findViewById(R.id.imageview_last_card);
-		lastCardView.getLayoutParams().width = (int)(nextCardView.getMeasuredWidth() * LAST_CARD_SCALE);
+		lastCardView.getLayoutParams().width = (int)(width * LAST_CARD_SCALE);
 		lastCardView.getLayoutParams().height = (int)(nextCardView.getMeasuredHeight() * LAST_CARD_SCALE);
 	    }
 	});
@@ -159,6 +163,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	if (lastTag != null) {
 	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
 	}
+	Toast.makeText(getActivity(), "w: " + width, Toast.LENGTH_SHORT).show();
 	return dealNewCard;
     }
 
