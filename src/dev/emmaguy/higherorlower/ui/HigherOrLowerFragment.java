@@ -75,6 +75,9 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	    });
 	}
 
+	ViewHelper.setScaleX(lastCardView, LAST_CARD_SCALE);
+	ViewHelper.setScaleY(lastCardView, LAST_CARD_SCALE);
+	
 	return v;
     }
 
@@ -82,17 +85,6 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     public void onResume() {
 	this.currentGame.resumeGame();
 	super.onResume();
-
-	final ImageView lastCardView = (ImageView) getView().findViewById(R.id.imageview_last_card);
-	lastCardView.post(new Runnable() {
-	    @Override
-	    public void run() {
-		ViewHelper.setPivotX(lastCardView, ViewHelper.getX(lastCardView));
-		ViewHelper.setPivotY(lastCardView, ViewHelper.getY(lastCardView));
-		ViewHelper.setScaleX(lastCardView, LAST_CARD_SCALE);
-		ViewHelper.setScaleY(lastCardView, LAST_CARD_SCALE);
-	    }
-	});
     }
 
     @Override
@@ -174,7 +166,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	scale.setDuration(500);
 
 	TranslateAnimation slideCurrentCardToRight = new TranslateAnimation(0, 0, TranslateAnimation.ABSOLUTE,
-		LAST_CARD_SCALE - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
+		LAST_CARD_SCALE + 15.0f - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
 	slideCurrentCardToRight.setDuration(500);
 
 	animationSet.addAnimation(scale);

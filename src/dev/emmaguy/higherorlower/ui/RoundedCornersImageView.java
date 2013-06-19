@@ -31,17 +31,8 @@ public class RoundedCornersImageView extends ImageView {
 	if (measuredHeight <= 0 || measuredWidth <= 0) {
 	    super.setImageResource(resourceId);
 	}
-	updateCard(Integer.valueOf(resourceId).toString());
-    }
-
-    @Override
-    public void onDraw(Canvas c) {
-	if(roundedCornersDrawable != null)
-	    roundedCornersDrawable.draw(c);
-    }
-
-    private void updateCard(String resourceId) {
-	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(resourceId));
+	
+	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(Integer.valueOf(resourceId).toString()));
 
 	measuredWidth = getMeasuredWidth();
 	measuredHeight = getMeasuredHeight();
@@ -53,5 +44,11 @@ public class RoundedCornersImageView extends ImageView {
 	}
 
 	roundedCornersDrawable = new RoundedCornersDrawable(Bitmap.createScaledBitmap(bitmap, measuredWidth, measuredHeight, true), CORNER_RADIUS_PX);
+    }
+
+    @Override
+    public void onDraw(Canvas c) {
+	if(roundedCornersDrawable != null)
+	    roundedCornersDrawable.draw(c);
     }
 }
