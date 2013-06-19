@@ -1,8 +1,6 @@
 package dev.emmaguy.higherorlower.ui;
 
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +17,9 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nineoldandroids.view.ViewHelper;
+
 import dev.emmaguy.higherorlower.HigherOrLowerGame;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnCardChanged;
 import dev.emmaguy.higherorlower.HigherOrLowerGame.OnScoreChanged;
@@ -28,14 +29,12 @@ import dev.emmaguy.higherorlower.card.Card;
 
 public class HigherOrLowerFragment extends Fragment implements View.OnClickListener, OnCardChanged, OnScoreChanged {
 
-    private static final float CORNER_RADIUS_PX = 9.5f;
-    
+    private static final float LAST_CARD_SCALE = 0.8f;
     private boolean isFirstCard = true;
-    
+
     private TranslateAnimation dealNewCardAnimation;
     private HigherOrLowerGame currentGame;
     private AnimationSet slideOldCardToLeftAnimationSet;
-    
 
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
@@ -43,7 +42,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	View v = inflater.inflate(R.layout.fragment_higher_or_lower, null);
+	final View v = inflater.inflate(R.layout.fragment_higher_or_lower, null);
 
 	v.findViewById(R.id.button_higher).setOnClickListener(this);
 	v.findViewById(R.id.button_same).setOnClickListener(this);
@@ -54,28 +53,30 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
 	// if we try and start the game before the layout has been done, the width and
 	// height of the ImageViews with the cards will be 0, and thus nothing will show
-	final ImageView lastCardView = (ImageView)v.findViewById(R.id.imageview_last_card);
+	final ImageView lastCardView = (ImageView) v.findViewById(R.id.imageview_last_card);
 	ViewTreeObserver viewTreeObserver = lastCardView.getViewTreeObserver();
 	if (viewTreeObserver.isAlive()) {
-	  viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-	    @Override
-	    public void onGlobalLayout() {
-	      removeOnGlobalLayoutListener(lastCardView);
-	      
-	    }
-
-	    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	    @SuppressWarnings("deprecation")
-	    private void removeOnGlobalLayoutListener(final ImageView lastCardView) {
-		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-		    lastCardView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-		} else {
-		    lastCardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+	    viewTreeObserver.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+		@Override
+		public void onGlobalLayout() {
+		    removeOnGlobalLayoutListener(lastCardView);
 		}
-		currentGame.startGame();
-	    }
-	  });
+
+		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+		@SuppressWarnings("deprecation")
+		private void removeOnGlobalLayoutListener(final ImageView lastCardView) {
+		    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			lastCardView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+		    } else {
+			lastCardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+		    }
+		    currentGame.startGame();
+		}
+	    });
 	}
+
+	ViewHelper.setScaleX(lastCardView, LAST_CARD_SCALE);
+	ViewHelper.setScaleY(lastCardView, LAST_CARD_SCALE);
 	
 	return v;
     }
@@ -110,10 +111,10 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	final ImageView lastCardView = (ImageView) getView().findViewById(R.id.imageview_last_card);
 	final ImageView currentCardView = (ImageView) getView().findViewById(R.id.imageview_current_card);
 
-	if(isFirstCard){
-	    updateCard(lastCardView, Integer.valueOf(R.drawable.card_back).toString());
+	if (isFirstCard) {
+	    lastCardView.setImageResource(Integer.parseInt(Integer.valueOf(R.drawable.card_back).toString()));
 	}
-	
+
 	if (slideOldCardToLeftAnimationSet != null && !slideOldCardToLeftAnimationSet.hasEnded()) {
 	    currentCardView.clearAnimation();
 	}
@@ -140,40 +141,20 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable",
 		"dev.emmaguy.higherorlower");
 
-	updateCard(nextCardView, Integer.valueOf(currentCardIdentifier).toString());
+	nextCardView.setImageResource(Integer.parseInt(Integer.valueOf(currentCardIdentifier).toString()));
 	nextCardView.setTag(currentCardIdentifier);
 
 	Object tag = currentCardView.getTag();
 	if (tag != null) {
-	    updateCard(currentCardView, tag.toString());
+	    currentCardView.setImageResource(Integer.parseInt(tag.toString()));
 	}
 
 	Object lastTag = lastCardView.getTag();
 	if (lastTag != null) {
-	    updateCard(lastCardView, lastTag.toString());
+	    lastCardView.setImageResource(Integer.parseInt(lastTag.toString()));
 	}
+
 	return dealNewCard;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    @SuppressWarnings("deprecation")
-    private void updateCard(ImageView cardView, String resourceId) {
-	Bitmap bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(resourceId));
-	
-	int measuredWidth = cardView.getMeasuredWidth();
-	int measuredHeight = cardView.getMeasuredHeight();
-	
-	if(measuredHeight <= 0 || measuredWidth <= 0)
-	    return;
-		
-	RoundedCornersDrawable roundedCornersDrawable = 
-		new RoundedCornersDrawable(Bitmap.createScaledBitmap(bitmap, measuredWidth, measuredHeight, true), CORNER_RADIUS_PX);
-
-	if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-	    cardView.setBackgroundDrawable(roundedCornersDrawable);
-	} else {
-	    cardView.setBackground(roundedCornersDrawable);
-	}
     }
 
     private AnimationSet getSlideOldCardToLeftAnimation(final ImageView nextCardView, final ImageView lastCardView,
@@ -181,11 +162,11 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	final AnimationSet animationSet = new AnimationSet(false);
 	animationSet.setFillAfter(true);
 
-	ScaleAnimation scale = new ScaleAnimation(1.0f, 0.8f, 1.0f, 0.8f);
+	ScaleAnimation scale = new ScaleAnimation(1.0f, LAST_CARD_SCALE, 1.0f, LAST_CARD_SCALE);
 	scale.setDuration(500);
 
 	TranslateAnimation slideCurrentCardToRight = new TranslateAnimation(0, 0, TranslateAnimation.ABSOLUTE,
-		0.8f - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
+		LAST_CARD_SCALE + 15.0f - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
 	slideCurrentCardToRight.setDuration(500);
 
 	animationSet.addAnimation(scale);
@@ -205,7 +186,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
 		Object tag = nextCardView.getTag();
 		if (tag != null && !isFirstCard) {
-		    updateCard(lastCardView, tag.toString());
+		    lastCardView.setImageResource(Integer.parseInt(tag.toString()));
 		}
 
 		Object currentCardTag = currentCardView.getTag();

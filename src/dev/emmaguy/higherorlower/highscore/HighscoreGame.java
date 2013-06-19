@@ -29,6 +29,7 @@ public class HighscoreGame implements HigherOrLowerGame {
 	   public void run() {       
 	       millisecondsRemaining = deck.getMaxTimeToSolve() - (getTime() - startTime);
 	       if(millisecondsRemaining <= 0){
+		   millisecondsRemaining = 0;
 		   scoreChangedListener.onScoreChanged(new HighscoreScore(currentScore, millisecondsRemaining));
 		   gameOverListener.onGameOver(new HighscoreGameOver(currentScore, 0));
 		   
