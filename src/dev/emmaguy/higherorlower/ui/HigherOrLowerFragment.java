@@ -164,6 +164,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     private AnimationSet getSlideOldCardToLeftAnimation(final ImageView nextCardView, final ImageView lastCardView,
 	    final ImageView currentCardView) {
 	final AnimationSet animationSet = new AnimationSet(false);
+	animationSet.setFillAfter(true);
 
 	ScaleAnimation scale = new ScaleAnimation(1.0f, LAST_CARD_SCALE, 1.0f, LAST_CARD_SCALE);
 	scale.setDuration(500);
