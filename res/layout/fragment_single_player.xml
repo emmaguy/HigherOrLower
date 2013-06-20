@@ -5,24 +5,24 @@
     style="@style/layout_background"
     tools:context=".SinglePlayerFragment" >
 
-    <ImageView
-        android:id="@+id/imageview_logo2"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
+        <TextView
+        android:id="@+id/textview_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:layout_toRightOf="@id/imageview_logo2"
+        android:layout_margin="11dp"
         android:text="@string/app_name"
         android:textColor="#000000"
         android:textSize="30sp" />
+    
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher"
+        android:layout_toLeftOf="@id/textview_title2" />
     
     <Button
         android:id="@+id/button_sudden_death"
