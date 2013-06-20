@@ -22,7 +22,6 @@ public class Card {
     public String getResourceName() {
 	String cardNumber = getCardNumber().toString().toLowerCase(Locale.UK);
 	String cardSuit = getSuit().toString().toLowerCase(Locale.UK);
-	return "card_" + cardNumber + "_" + cardSuit;
+	return cardNumber + "_of_" + cardSuit;
     }
-    
 }

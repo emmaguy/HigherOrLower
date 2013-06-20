@@ -14,44 +14,52 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:layout_weight="1"
+        android:minHeight="70dp"
         android:background="@drawable/textview_score_background"
         android:gravity="center"
         android:textColor="@color/score_score_colour"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_marginTop="2dp" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:layout_marginTop="2dp">
 
-        <dev.emmaguy.higherorlower.ui.RoundedCornersImageView
+        <ImageView
             android:id="@+id/imageview_last_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:contentDescription="@string/current_card_description"
-            android:scaleType="fitXY" />
+            android:minWidth="75dp"
+            android:minHeight="109dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/current_card_description" />
 
-        <dev.emmaguy.higherorlower.ui.RoundedCornersImageView
+        <ImageView
             android:id="@+id/imageview_current_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/current_card_description" />
-
-        <dev.emmaguy.higherorlower.ui.RoundedCornersImageView
+            android:minWidth="93dp"
+            android:minHeight="136dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/current_card_description"/>
+        
+        <ImageView
             android:id="@+id/imageview_next_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:minWidth="93dp"
+            android:minHeight="136dp"
+            android:layout_centerInParent="true"
             android:contentDescription="@string/current_card_description" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_weight="0.5"
+        android:layout_weight="0.3"
         android:orientation="horizontal"
         tools:ignore="UselessParent" >
 
@@ -60,27 +68,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:contentDescription="@string/button_higher"
-            android:src="@drawable/button_higher" />
+            android:src="@drawable/up"
+            android:layout_weight="1"
+            android:background="@drawable/game_buttons_background" />
 
         <ImageView
             android:id="@+id/button_same"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_gravity="center"
             android:contentDescription="@string/button_same"
-            android:src="@drawable/button_same" />
+            android:src="@drawable/equals"
+            android:layout_weight="1"
+            android:background="@drawable/game_buttons_background" />
 
         <ImageView
             android:id="@+id/button_lower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_gravity="right|center_vertical"
             android:contentDescription="@string/button_lower"
-            android:src="@drawable/button_lower" />
+            android:src="@drawable/down"
+            android:layout_weight="1"
+            android:background="@drawable/game_buttons_background" />
     </LinearLayout>
 
 </LinearLayout>

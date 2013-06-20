@@ -31,7 +31,7 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
     private static final float LAST_CARD_SCALE = 0.8f;
     private boolean isFirstCard = true;
-
+    
     private TranslateAnimation dealNewCardAnimation;
     private HigherOrLowerGame currentGame;
     private AnimationSet slideOldCardToLeftAnimationSet;
@@ -132,10 +132,13 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 
     private TranslateAnimation getDealNewCardAnimation(final Card currentCard, final ImageView nextCardView,
 	    final ImageView lastCardView, final ImageView currentCardView) {
-	TranslateAnimation dealNewCard = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1.0f,
-		Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-		0.0f);
+	TranslateAnimation dealNewCard = new TranslateAnimation(
+		Animation.RELATIVE_TO_PARENT, 1.0f,
+		Animation.RELATIVE_TO_PARENT, 0.0f, 
+		0, 0, 
+		0, 0);
 	dealNewCard.setDuration(500);
+	dealNewCard.setFillAfter(true);
 	dealNewCard.setInterpolator(new DecelerateInterpolator());
 
 	int currentCardIdentifier = getResources().getIdentifier(currentCard.getResourceName(), "drawable",
@@ -160,13 +163,15 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     private AnimationSet getSlideOldCardToLeftAnimation(final ImageView nextCardView, final ImageView lastCardView,
 	    final ImageView currentCardView) {
 	final AnimationSet animationSet = new AnimationSet(false);
-	animationSet.setFillAfter(true);
 
 	ScaleAnimation scale = new ScaleAnimation(1.0f, LAST_CARD_SCALE, 1.0f, LAST_CARD_SCALE);
 	scale.setDuration(500);
 
-	TranslateAnimation slideCurrentCardToRight = new TranslateAnimation(0, 0, TranslateAnimation.ABSOLUTE,
-		LAST_CARD_SCALE + 15.0f - currentCardView.getLeft(), 0, 0, TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
+	TranslateAnimation slideCurrentCardToRight = new TranslateAnimation(
+		TranslateAnimation.RELATIVE_TO_SELF, 0.0f, 
+		TranslateAnimation.ABSOLUTE, ViewHelper.getX(lastCardView) - ViewHelper.getX(currentCardView) + (lastCardView.getWidth() / 10.0f), 
+		0, 0, 
+		TranslateAnimation.RELATIVE_TO_SELF, 0.1f);
 	slideCurrentCardToRight.setDuration(500);
 
 	animationSet.addAnimation(scale);
@@ -184,17 +189,13 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
 	    @Override
 	    public void onAnimationEnd(Animation animation) {
 
-		Object tag = nextCardView.getTag();
+		Object tag = currentCardView.getTag();
 		if (tag != null && !isFirstCard) {
 		    lastCardView.setImageResource(Integer.parseInt(tag.toString()));
+		    lastCardView.setTag(tag);
 		}
 
-		Object currentCardTag = currentCardView.getTag();
-		if (currentCardTag != null) {
-		    lastCardView.setTag(currentCardTag);
-		}
-
-		currentCardView.setTag(tag);
+		currentCardView.setTag(nextCardView.getTag());
 		isFirstCard = false;
 	    }
 	});

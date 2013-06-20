@@ -8,9 +8,12 @@
 
     <TableLayout
         android:id="@+id/tablelayout_results"
-        android:layout_width="190dp"
-        android:layout_height="165dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:minWidth="190dp"
+        android:minHeight="165dp"
         android:stretchColumns="true"
         android:background="@drawable/textview_results_background"
         android:gravity="center"/>
