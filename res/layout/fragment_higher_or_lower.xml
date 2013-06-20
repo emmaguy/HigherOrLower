@@ -13,7 +13,7 @@
         android:layout_gravity="top|center_horizontal"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:layout_weight="1"
+        android:layout_weight="0.4"
         android:minHeight="70dp"
         android:background="@drawable/textview_score_background"
         android:gravity="center"
