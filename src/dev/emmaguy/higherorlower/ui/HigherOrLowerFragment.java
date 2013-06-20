@@ -33,8 +33,9 @@ public class HigherOrLowerFragment extends Fragment implements View.OnClickListe
     private boolean isFirstCard = true;
     
     private TranslateAnimation dealNewCardAnimation;
-    private HigherOrLowerGame currentGame;
     private AnimationSet slideOldCardToLeftAnimationSet;
+    
+    private HigherOrLowerGame currentGame;
 
     public void setArguments(HigherOrLowerGame currentGame) {
 	this.currentGame = currentGame;
